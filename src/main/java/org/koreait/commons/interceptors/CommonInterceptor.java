@@ -23,7 +23,7 @@ public class CommonInterceptor implements HandlerInterceptor {
         /* PC, Mobile 수동 변경 처리 S */
         String deivice = request.getParameter("device");
         if (deivice != null && !deivice.isBlank()) {
-            session.setAttribute("device", deivice.toLowerCase().equals("MOBILE") ? "mobile" : "pc");
+            session.setAttribute("device", deivice.toLowerCase().equals("mobile") ? "mobile" : "pc");
         }
         /* PC, Mobile 수동 변경 처리 E */
 
