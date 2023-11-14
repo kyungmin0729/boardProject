@@ -2,13 +2,21 @@ package org.koreait.controllers.members;
 
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.koreait.commons.Utils;
+import org.koreait.models.member.MemberInfo;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
+
+@Slf4j
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -26,4 +34,24 @@ public class MemberController {
         model.addAttribute("redirectURL", redirectURL);
         return utils.tpl("member/login");
     }
+
+    @ResponseBody
+    @GetMapping("/info")
+    public void info() {
+        MemberInfo member = (MemberInfo)SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+
+        log.info(member.toString());
+
+    }
+    /*
+    public void info(@AuthenticationPrincipal MemberInfo memberInfo) {
+        log.info(memberInfo.toString());
+    }
+
+    public void info(Principal principal) {
+        String email = principal.getName();
+        log.info(email);
+    }
+     */
 }
